@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="GameOfLife.Views.ShellView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:commands="clr-namespace:GameOfLife.Commands"
+             mc:Ignorable="d">
+    <DockPanel>
+        <DockPanel.InputBindings>
+            <MouseBinding Gesture="{x:Static commands:MouseWheelGesture.CtrlDown}"
+                      Command="{Binding LowerSizeCommand}"/>
+            <MouseBinding Gesture="{x:Static commands:MouseWheelGesture.CtrlUp}"
+                      Command="{Binding UpperSizeCommand}"/>
+        </DockPanel.InputBindings>
+
+        <StatusBar DockPanel.Dock="Bottom">
+            <!--<StatusBarItem>
+                <Button Content="&lt;" Command="{Binding Path=LowerSizeCommand}"/>
+            </StatusBarItem>-->
+            <StatusBarItem>
+                <TextBlock Text="{Binding Path=RowSize}">
+                    <TextBlock.ToolTip>
+                        <ToolTip>
+                            Ctr + mouse wheel to change greed size
+                        </ToolTip>
+                    </TextBlock.ToolTip>
+                </TextBlock>
+            </StatusBarItem>
+            <!--<StatusBarItem>
+                <Button Content=">" Command="{Binding Path=UpperSizeCommand}"/>
+            </StatusBarItem>-->
+            <StatusBarItem>
+                <ProgressBar x:Name="DotsProgressBar" Minimum="0" Maximum="{Binding MaxSize}" Value="{Binding ActualGridSize}" Width="100"/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Button Command="{Binding Path=StartCommand}" Width="20" Height="20">
+                    <Image Source="{Binding PlayIcon}"/>
+                </Button>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Button Command="{Binding Path=NextCommand}" 
+                        IsEnabled="{Binding IsPaused}"
+                        Width="20" Height="20">
+                    <Image Source="pack://application:,,,/Resources/Next.png"/>
+                </Button>
+            </StatusBarItem>
+        </StatusBar>
+        <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+            <ScrollViewer.InputBindings>
+                <MouseBinding Gesture="{x:Static commands:MouseWheelGesture.CtrlDown}"
+                      Command="{Binding LowerSizeCommand}"/>
+                <MouseBinding Gesture="{x:Static commands:MouseWheelGesture.CtrlUp}"
+                      Command="{Binding UpperSizeCommand}"/>
+            </ScrollViewer.InputBindings>
+            
+            <Canvas x:Name="ContentGrid" MinHeight="100" MinWidth="100" 
+                  VerticalAlignment="Stretch"/>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>
